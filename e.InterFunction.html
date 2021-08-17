@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 내장함수</title>
+    <style>
+        .area {
+            background-color:lightsteelblue;
+            border : 1px solid black;
+            height : 250px;
+        }
+    </style>
+</head>
+<body>
+    <h1>javascript 내장함수</h1>
+    <h3>인코딩/디코딩 내장함수</h3>
+    <p>
+        1.escape: 영문 알파벳 숫자 일부 특수문자 (@,*,<,.,/)를 제외한 모든 문자 인코딩 <br>
+        2.ecodeURI:escape에서 인터넷 주소에 사용되는 일부 특수문자(:,;,/,=,?,&)는 변환하지 않음 <br>
+        3.encodeURIComponent:알파벳가 숫자를 제외한 모든 문자를 인코딩 (UTF-8 방식)<br>  
+
+        4. unescape:escape로 인코딩 된 문자를 디코딩<br>
+        5. decodeURI:encodeURI로 인코딩 된 문자를 디코딩함<br>
+        6. decodeURIComponent: encodeURIComponent로 인코딩 된 문자를 디코딩함<br>
+    </p>
+    <button onclick="testEncode();">실행 확인</button>
+    <br><br>
+    <div id = "area1" class="area"></div>
+    <h3>eval() 함수</h3>
+    <p>문자열을 자바스크립트 코드로 변환해 실행하는 함수</p>
+    <label><input type="text" name="number1" id="number1"></label>
+    <label><input type="text" name="number2" id="number2"></label>
+    <button onclick="testEval();">실행확인</button>
+    <br><br>
+    <div id = "area2" class="area"></div>  
+    <script>
+        function testEncode() {
+            var URI = "http://www.naver.com?test=한글.";
+            var escapedData = escape(URI);
+            var encodeData = encodeURI(URI);
+            var encodedComponent = encodeURIComponent(URI);
+            var areaTag = document.getElementById("area1");
+            areaTag.innerHTML += "<b>인코딩 작업</b><br>";
+            areaTag.innerHTML += "escape() : " + escapedData+ "<br>";
+            areaTag.innerHTML += "encodeURI() : " + encodeData+ "<br>";
+            areaTag.innerHTML += "escodeURIComponent() : " + encodedComponent+ "<br>";
+
+            areaTag.innerHTML += "<b>디코딩 작업</b><br>";
+            areaTag.innerHTML += "unescape() : " + unescape(escapedData)+ "<br>";
+            areaTag.innerHTML += "decodeURI() : " + decodeURI(encodeData)+ "<br>";
+            areaTag.innerHTML += "decodeURIComponent() : " + decodeURIComponent(encodedComponent)+ "<br>";
+
+        }
+
+        function testEval() {
+            var evalStr = "";
+            evalStr += "";
+            evalStr += "var num1 = Number(document.getElementById('number1').value);";
+            evalStr += "var num2 = Number(document.getElementById('number2').value);";
+            evalStr += "var sum = 0;";
+            evalStr += "sum = num1+num2;";
+            evalStr += "document.getElementById('area2').innerHTML = num1 + '과' + num2 + '의 합은 : ' + sum;";
+            console.log(evalStr);
+            eval(evalStr);
+        }
+        </script>
+</body>
+</html>
