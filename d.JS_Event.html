@@ -5,8 +5,93 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>자바스크립트 이벤트</title>
+    <style>
+        .area {
+            background-color: cornflowerblue;
+            border : 1px solid black;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
-    
+    <h1>이벤트</h1>
+    <p>
+        이벤트 : 웹 페이지에서 어떠한 행위(사용자의 행동)가 
+        발생한 것을 이벤트라 함 <br>
+        이벤트 활용 : 이벤트 속성과 이벤트핸들러(함수)를 연동하여 
+        이벤트 발생시 특정기능을 하도록 함.
+    </p>
+    <h3>이벤트 설정방법</h3>
+    <p>
+        1. 고전 이벤트 모델 <br>
+        2. 인라인 이벤트 모델 <br>
+        3. 표준 이벤트 모델 <br>
+    </p>
+    <h3>고전 이벤트 모델</h3>
+    <p>
+        1. 요소객체가 가지고 있는 이벤트 속성에 이벤트 핸들러를 연결하는 방법<br>
+        2. 이벤트를 제거할 때는 속성값에 null값을 넣어주면 됨.
+    </p>
+    <button id="eventTest1">eventTest1() 실행확인</button><br><br>
+    <button id="eventTest2">eventTest2() 실행확인</button><br><br>
+    <div id = "area-tag1" class ="area"></div>
+
+    <h3>인라인 이벤트 모델</h3>
+    <p>
+        요소 내부에 이벤트를 작성하는 방법 <br>
+        script 태그에 있는 함수를 호출하는 방식을 선호
+    </p>
+    <button onclick="inlineFunc();">실행확인</button><br><br>
+    <div id="area-tag2" class="area"></div>
+
+    <h3>표준 이벤트 모델</h3>
+    <p>
+        W3C에서 공식적으로 지정 <br>
+        한번에 여러가지 이벤트 리스너를 추가 가능 <br>
+        이벤트 캡쳐링 지원하지만 사용하지 않음 <br>
+        addEventListener(eventName, handler, useCapture) <br>
+        removeEventListener(eventName, handler) <br>
+        매개변수 useCapture는 입력하지 않으면 자동으로 false <br>
+        이벤트 리스너 안에서 this 키워드가 이벤트 발생 객체를 의미 <br>
+
+    </p>
+    <button id="btn-tag1">실행확인</button><br><br>
+    <div id ="area-tag3" class="area"></div>
+
+    <h3>이벤트 발생 객체</h3>
+    <button id="btn-tag2">실행확인</button><br><br>
+    <div id ="area-tag4" class="area"></div>
+
+    <script>
+        var testTag1 = document.getElementById("eventTest1");
+        var testTag2 = document.getElementById("eventTest2");
+        var area1Tag = document.getElementById("area-tag1");
+       
+        testTag1.onclick = function() {
+            area1Tag.innerHTML = "eventTest1()이 실행되었습니다.<br>";
+        };
+
+        testTag2.onclick = function() {
+            area1Tag.innerHTML = "eventTest2()이 실행되었습니다.<br>";
+        };
+        testTag2.onclick = null;
+
+        function inlineFunc() {
+            var area2Tag = document.getElementById("area-tag2");
+            area2Tag.innerHTML = "인라인 이벤트 모델로 실행되었습니다.";
+        }
+
+        var btnTag = document.getElementById("btn-tag1");
+        btnTag.addEventListener("click",function() {
+            document.getElementById("area-tag3").innerHTML = "표준 이벤트 모델로 실행되었습니다.";
+        });
+
+        var btnTag2 = document.getElementById("btn-tag2");
+        btnTag2.onclick = function(e) {
+            console.log(e);
+            console.log(e.x+","+e.y);
+            console.log(e.target);
+        };
+    </script>
 </body>
 </html>
