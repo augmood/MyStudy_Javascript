@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정규표현식 연습문제2</title>
+</head>
+<body>     
+    <div id="testText" style="border:1px solid blue; height:200px; width:400px;">
+        Hello!! 저는 miracle 입니다.
+        제 전화 번호는 010-1112-3342 입니다.
+    </div>
+    <div id="printText" style="border:1px solid red; height:200px; width:400px;">
+    </div>
+    <button onclick="regExCheck();">체크</button>
+    <button onclick="regExCheck2();">체크</button>
+
+    <script>
+        function regExCheck()
+        {
+            var target = document.querySelector("#testText").innerHTML;
+            var result = document.querySelector("#printText");
+            var regExp = /[a-zA-Z] /gi; // 영어
+            var regExp2 = /[a-z|A-Z|0-9] /gi;  //영어 숫자
+            var regExp3 = /[ㄱ-힇]/gi;  //영어 숫자
+            result.innerHTML=  target.replace(regExp3,"");
+            
+            
+        }
+        function regExCheck2()
+        {
+            // exec메소드
+            // 1. 정규표현식으로 찾은 값을 리턴
+            // 2. () 그룹화 기호를 사용하면 [0]번째에는 정규표현식으로 만든 데이터 전체 [1]번째 이후에는 그룹화된 데이터를 가져옴
+
+            // ah_k 을 불러와서 해보세요 -> 회원가입 유효성 검사 실습
+            var target = "<span class='ah_k'>현도훈</span><span class='ah_k'>김구</span><span class='ah_k'>John</span>";
+            var targetEx = "hello,world,khlove";
+            var regEx1 = /(.+),/i;
+            var regEx2 = /(.+?),/i;
+            var regEx3 = /(.+?),(.+?),(.+)/i;
+            var result1 = regEx1.exec(targetEx);
+            console.log(result1);
+            var result2 = regEx2.exec(targetEx);
+            console.log(result2);
+            var result3 = regEx3.exec(targetEx);
+            console.log(result3);
+        }
+    </script>
+</body>
+</html>

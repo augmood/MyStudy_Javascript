@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정규표현식</title>
+    <style>
+        .area {
+            background-color: lightsteelblue;
+            border: 1px solid black;
+            height : 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>정규표현식</h1>
+    <h3>정규표현식의 객체 생성</h3> 
+    <p>
+        1. 특정한 규칙을 가진 문자열의 집합을 표현하는데 사용하는 형식 언어 <br>
+        2. 주로 프로그래밍 언어나 텍스트 에디터 등에서 문자열의 검색과 치환을 위한 용도로 사용됨<br>
+        3. 입력한 문자열에서 특정한 조건을 표현할 경우 다소 복잡할 수 있지만 표현식을 숙지하면 매우 간단하게 표현 가능<br>
+    </p>
+    <button id="btn-regex1">확인하기</button><br><br>
+    <div id="area-tag1" class="area"></div>
+
+    <h3>플래그 문자</h3> 
+    <p>
+        g : 전역비교를 수행 <br>
+        i : 대소문자 구분하지 않음 <br>
+        m : 여러줄 검사 수행 <br>
+    </p>
+    <button id = "btn-flag">플래그 문자 확인</button><br><br>
+    <div id="area-tag2" class="area"></div>
+
+    <h3>앵커 문자</h3> 
+    <p>
+        문자열 앞과 뒤를 구분해주는 정규표현식 기호
+    </p>
+    <button id = "btn-ank">앵커 문자 확인</button><br><br>
+    <div id="area-tag3" class="area"></div>
+
+    <h3>메타 문자</h3> 
+    <p>
+        [] : 대괄호 사이에 존재하는 문자들 중 하나 일치
+    </p>
+    <button id = "btn-meta">메타 문자 확인</button><br><br>
+    <div id="area-tag4" class="area"></div>
+
+    <h3>수량 문자</h3> 
+    <p>
+        a+ : a가 적어도 1개 이상<br>
+        a* : a가 0개 또는 여러개<br>
+        a? : a가 0개 또는 1개<br>
+        a{5} : a가 5개<br>
+        a{2,5} : a가 2-5개<br>
+        a{2, } : a가 2개 이상<br>
+        a{ ,2} : a가 2개 이하<br>
+        <b>a는 주로 메타문자로 사용</b>
+    </p>
+
+    <label for ="personal-number">주민번호 입력 : </label><input type = "text" name="personal-number" id="personal-number">
+    <button id = "btn-ext-btn">추가 메타 문자 확인</button><br><br>
+
+    <h3>추가 메타 문자</h3> 
+    <p>
+        \d : 숫자 <br>
+        \w : 아무 단어 전부 (숫자포함) <br>
+        \s : 공백문자(탭, 띄어쓰기, 줄바꿈) <br>
+        \D : 숫자가 아닌 것 <br>
+        \W : 단어가 아닌 것 <br>
+        \S : 공백문자가 아닌 것 <br>
+    </p>
+
+    <lable for = "hangeul">한글 입력 : </lable><input type="text" name="hangeul" id="hangeul">
+    <button id = "btn-hangeul">한글 문자 확인</button><br><br>
+
+    <script>
+        //var regBtn = document.getElementById("btn-regex1");
+        // 형식 상관없이 쓰고 싶은 것 앞에 #을 넣어주기, id인지 name인지 구분하지 않고 쿼리선택자면 된다.
+        var regBtn = document.querySelector("#btn-regex1"); 
+        var flagBtn = document.querySelector("#btn-flag");
+        var ankBtn = document.querySelector("#btn-ank");
+        var metaBtn = document.querySelector("#btn-meta");
+        var metaExtraBtn = document.querySelector("#btn-ext-btn");
+        var korBtn = document.querySelector("#btn-hangeul");
+
+        var areaTag1 = document.querySelector("#area-tag1");
+        var areaTag2 = document.querySelector("#area-tag2");
+        var areaTag2 = document.querySelector("#area-tag2");
+        var areaTag3 = document.querySelector("#area-tag3");
+        var areaTag4 = document.querySelector("#area-tag4");
+
+        regBtn.onclick = function() {
+            var target = "javascript jquery ajax";
+            var regExp = /script/;
+            areaTag1.innerHTML += regExp.test(target) + "<br>"; // true -> 있다.
+            areaTag1.innerHTML += regExp.exec(target) + "<br>"; // script -> 대체한다.
+            areaTag1.innerHTML += target.replace(regExp, "스크립트") + "<br>"; // java스크립트 jquery ajax -> 바꿔준다.
+        };
+
+        flagBtn.addEventListener("click", function(){
+            var target = "javascript jquery Ajax";
+            var target2 = "javascript\njquery\nAjax";
+            var regExp = /a/gi; // 대소문자 같이 출력 gi 
+            var regExp2 = /^j/gim; // 개행을 한 문자열에서 j를 모두 검색하려면 m이 필요함
+            // areaTag2.innerHTML += regExp.exec(target)+"<br>";
+            areaTag2.innerHTML += target.replace(regExp, "($&)") + "<br>"; // 전역비교를 수행한 a에 괄호를 붙여서 출력하라.
+            areaTag2.innerHTML += target2.replace(regExp2, "($&)");
+        });
+
+        ankBtn.onclick = function () {
+            var target = "Javascript\nQuery\nAjax";
+            var regExp = /^j/gim; // j로 시작하는 문자를 찾아주세요
+            var regExp2 = /ipt$/gim; // ipt로 끝나는 문자를 찾아주세요
+            areaTag3.innerHTML += target.replace(regExp, "($&)") + "<br>";
+            areaTag3.innerHTML += target.replace(regExp2, "($&)") + "<br>";
+        };
+
+        metaBtn.onclick = function () {
+            var target = "Javascript JQuery Ajax";
+            var regExp = /[aj]/gi; //a랑 j둘 다 무조건 괄호 처리를 한다.
+            var regExp2 = /[^aj]/gi; // a와 j를 빼고 무조건 괄호 처리를 한다.
+            var regExp3 = /[a-g]/gi; 
+            areaTag4.innerHTML += target.replace(regExp, "($&)") + "<br>";
+            areaTag4.innerHTML += target.replace(regExp2, "($&)") + "<br>"; 
+            areaTag4.innerHTML += target.replace(regExp3, "($&)") + "<br>";
+        };
+    
+        metaExtraBtn.addEventListener("click", function(){
+            var target = document.querySelector("#personal-number").value;
+           // var regExp = /\d{6}-\d{7}/; // 6개-7개 = \d\d\d\d\d\d - \d\d\d\d\d\d\d
+              var regExp = /\d{2}(0[1-9]|1[0-2]|)(0[1-9]|[1-2][0-9]|3[01])-[1-4]\d{6}/; // 생년월일 오류 제거 (뭐라는지 생각해보기)
+            //                         월       0일단위생 10,20단위일생 30, 31일생
+            console.log(regExp.test(target));
+        });
+
+        korBtn.addEventListener("click", function(){
+            var target = document.querySelector("#hangeul").value
+            var regExp = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힇]\w{1}/;
+            console.log(target);
+            console.log(regExp.test(target));
+        });
+    </script>
+</body>
+</html>
