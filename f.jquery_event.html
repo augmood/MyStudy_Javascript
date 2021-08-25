@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <script src ="../JS/jquery-3.6.0.min.js"></script>
+    <title>jQeury Event 1</title>
+</head>
+<body>
+    <h1>이벤트</h1>
+    <p>
+        사용자가 마우스를 클릭하거나 마우스를 움직여 특정화면 위로 가져가거나 키보드를 누르는 행위를 이벤트라고 부름<br>
+        jQuery에서는 event객체를 통해서 이벤트를 제어함
+    </p>
+
+    <h3>마우스 오버 이벤트</h3>
+    <div id="div-hover" style="border:3px solid black; width: 100px; height: 100px;"></div>
+
+    <h3>클릭/더블클릭 이벤트</h3>
+    <p id="click">click</p>
+    <p id="dblclick">double click</p>
+
+    <h3>마우스 업/다운 이벤트</h3>
+    <div id="div-updown" style="border:3px solid black; width: 100px; height: 100px;"></div>
+
+    <h3>마우스 이동 이벤트</h3>
+    <h1>
+        mouse is a coordinate : <span id="span1"></span>
+    </h1>
+
+    <h3>키업/키프레스/키다운 이벤트</h3>
+    <div>
+        <p>글 작성</p>
+        <h1 id="noti-h1">작성 가능한 글자 수 : 150</h1>
+        <textarea name="" id="" cols="60" rows="5"></textarea>
+    </div>
+
+    <h3>입력 양식(form)이벤트</h3>
+    <form id="my-form" action = "result.html">
+        ID : <input type = "text" name="user-id" id="user-id">
+        PW : <input type = "password" name="user-pw" id="user-pw">
+        <input type = "submit" value="제출">
+        <input type = "reset" value="취소">
+    </form>
+
+    <h3>change 이벤트</h3>
+    <p>
+        input 태그의 type 속성이 checkbox, radio인 input 태그와 select태그의 상태변경을 감지하는 이벤트
+
+    </p>
+    전체 <input type="checkbox" name="all-check" id="all-check">
+    <div id = "check-item">
+        <input type="checkbox" name="" id=""> A
+        <input type="checkbox" name="" id=""> B
+        <input type="checkbox" name="" id=""> C
+    </div><hr>
+    남자 : <input type="radio" name="" id=""> 여자 <input type="radio" name="" id=""> 
+    <select name="" id="">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select><hr>
+
+    <script>
+        // 마우스 오버
+        $("#div-hover").on("mouseover", function(){
+            $(this).css("background-color", "lightsteelblue");
+        });
+
+        // 클릭 + 더블클릭
+        $("#click").on("click", function(){
+            $(this).css("color", "green");
+        });
+
+        $("#dblclick").on("dblclick", function(){
+            $(this).css("background-color", "green");
+        });
+
+        // 마우스 업다운(클릭 업다운)
+        $("#div-updown").on("mouseup", function(){
+            $(this).css("background-color", "lightsteelblue");
+        });
+        $("#div-updown").on("mousedown", function(){
+            $(this).css("background-color", "salmon")
+        });
+
+        // 마우스 이동 (마우스 좌표를 바로바로 알려줌)
+/*         $(document).on("mousemove", function(event){
+            $("#span1").html("<br>"+event.pageX+", "+event.pageY);
+        }); */
+
+        $("textarea").on("keyup", function(){
+            // console.log($(this).val());
+            var inLength = $(this).val().length; // 입력한 값
+            console.log(inLength);
+            $("#noti-h1").html("작성 가능한 글자 수 : "+(150-inLength));
+        });
+
+        $("my-form").on("submit", function(){
+            var userId = $("#user-id");
+            var userPw = $("#user-pw");
+
+            if(userId.val() == "") { // 비어있으면 값을 입력 받기
+                alert("ID를 입력하세요");
+            }else if(userPw.val() == "") {
+                alert("PW를 입력하세요");
+            }
+            return false;
+        });
+
+        // 입력 양식 이벤트
+        $("input").on("focus", function(){
+            $(this).css("background", "gold");
+        });
+        $("input").on("blur", function(){
+            $(this).css("background", "salmon");
+        });
+
+        // change 이벤트
+        $("#all-check").on("change", function(){
+           var checkTags = $("#check-item").children();
+           console.log($(this).prop("checked"));
+          // checkTags.attr("checked", "checked");
+           // 전체 체크하면 다 체크됨 (attr 말고 prop이 나음)
+        if($(this).is(":checked")) {
+            checkTags.prop("checked", true);
+        }else {
+            checkTags.prop("checked", false);
+        }
+       // checkTags.prop("checked","true");
+        });
+
+    </script>
+
+</body>
+</html>

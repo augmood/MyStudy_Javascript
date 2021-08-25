@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQeury Event 2</title>
+    <script src ="../JS/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>이벤트 PT2</h1>
+    <p>
+        사용자가 마우스를 클릭하거나 마우스를 움직여 특정화면 위로 가져가거나 키보드를 누르는 행위를 이벤트라고 함<br>
+        jQuery에서는 event객체를 통해서 이벤트를 제어함.
+    </p>
+
+    <h3>이벤트 연결</h3>
+    <p>
+        on() 메소드 : 이벤트 연결 <br>
+        off() 메소드 : on()으로 연결된 이벤트 제거 
+    </p>
+    <button id="btn-nothing">nothing..</button><br>
+    <button id="btn-add">click add</button><br>
+    <button id="btn-remove">click remove</button><br>
+    <h1 id="h-tag"></h1>
+    <hr>
+
+    <div id="div-tag1" style="border: 3px solid black; width:100px; height:100px"></div>
+    <button id="btn-onoff">off</button>
+    <hr>
+
+    <h3>이벤트 버블링 막기 기본</h3>
+    <p>
+        stopPropagaion() : 이벤트 전달 제거, 현재 이벤트가 상위 이벤트에 영향을 끼치지 않게 함 <br>
+        preventDafault() : 기본 이벤트 제거
+    </p>
+    <h1 id="h1-click">
+        <span id="span-click">click</span>
+    </h1>
+    <h1>
+        <a href="http://www.iei.or.kr">정보교육원</a>
+    </h1>
+
+    <script>
+        // 이벤트 연결 1
+        $("#btn-add").on("click", function() {
+            $("#btn-nothing").text("click");
+            $("#btn-nothing").on("click", function(){
+                $("#h-tag").append("Oh!");
+            });
+        });
+        $("#btn-remove").on("click", function(){
+            $("#btn-nothing").text("nothing..");
+            $("#btn-nothing").off("click");
+        });
+        // 이벤트 연결 2
+        $("#btn-onoff").on("click", function(){
+            $("#btn-onoff").text("on");
+        });
+
+        // 이벤트 버블링 막기
+
+        $("a").on("click", function(e){ // 새 창 열리게 
+            alert("난 클릭 이벤트야");
+            e.preventDefault(); // 기본 이벤트 제거
+        });
+
+        $("#h1-click").on("click", function(){
+            console.log("h1이 클릭 되었어요!");
+
+        });
+        $("#span-click").on("click", function(e){
+            console.log("span이 클릭 되었어요!");
+            e.stopPropagation(); // 이벤트 전달 방지, h1의 값이 같이 출력되지 않음
+        });
+        $("#div-tag1").on("mouseenter", function(){
+            console.log("enter");
+        });
+        $("#div-tag1").on("mouseleave", function(){
+            console.log("leave");
+        });
+    </script>
+</body>
+</html>
